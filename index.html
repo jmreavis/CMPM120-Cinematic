@@ -26,11 +26,15 @@
 
       preload() {
         this.load.image("logo", "logo.png");
+        this.load.audio("whoosh", ["whoosh.mp3"]);
       }
 
       create() {
         let logo = this.add.sprite(50, 50, "logo");
         let apple = this.add.circle(150, 150, 25, 0xff0000);
+        let whoosh = this.sound.add("whoosh", {loop: false});
+        let star = this.add.star(550, 500, 5, 32, 64, 0xffff00, 1);
+        whoosh.play();
         this.add.tween({
           targets: logo,
           x: 300,
@@ -41,9 +45,14 @@
         });
 
         this.add.tween({
+          targets: star,
+          scale: 0.5
+        });
+
+        this.add.tween({
           targets: apple,
           alpha: {from: 0, to: 1},
-          duration: 2000
+          duration: 3000
         });
 
         this.time.delayedCall(3000, () => {
@@ -63,11 +72,60 @@
       }
 
       preload() {
-        this.load.image("background", "background.png")
+        this.load.image("background", "background.png");
+        this.load.audio("ding", ["ding.mp3"]);
       }
 
       create() {
-        this.add.text(10, 10, "Now in the title scene");
+        let ding = this.sound.add("ding", {loop: false});
+        let name = this.add.text(250, 375, "Squirrel Simulator");
+        let begin = this.add.text(250, 450, "Press any buton");
+        let begin2 = this.add.text(280, 475, "to begin");
+        name.setDepth(1);
+        begin.setDepth(1);
+        begin2.setDepth(1);
+        let start = this.add.text("Press any button to begin");
+        let background = this.add.sprite(50, 50, "background");
+
+        this.add.tween({
+          targets: background,
+          scale: 0.25,
+          x: 300,
+          y: 350,
+          alpha: {from: 0, to: 1},
+          duration: 2000
+        });
+
+        this.add.tween({
+          targets: name,
+          y: {from: 0, to: 375},
+          duration: 2000
+        });
+        
+          this.add.tween({
+          targets: begin,
+          alpha: {from: 0, to: 1},
+          duration: 3000
+        });
+
+          this.add.tween({
+          targets: begin2,
+          alpha: {from: 0, to: 1},
+          duration: 3000
+        });
+
+        this.input.on('pointerdown', () => {
+          ding.play();
+        });
+
+        this.time.delayedCall(3000, () => {
+          this.cameras.main.fadeOut(3000, 0, 0, 0);
+        });
+
+        this.time.delayedCall(6000, () => {
+          this.scene.start('menu');
+        });
+
       }
     }
 
@@ -75,12 +133,32 @@
       constructor() {
         super('menu');
       }
+
+      preload() {
+        this.load.image("background", "background.png");
+      }
+
+      create() {
+        let message = this.add.text(10, 10, "In the menu class");
+        message.setDepth(1);
+        let background = this.add.sprite(50, 50, "background");
+
+        this.add.tween({
+          targets: background,
+          scale: 0.25,
+          x: 300,
+          y: 350,
+          alpha: {from: 0, to: 1},
+          duration: 2000
+        });
+      }
     }
 
     new Phaser.Game({
       width: 600,
       height: 750,
       scene: [Intro, Logo, Title, Menu],
+    
     });
   </script>
 </head>
