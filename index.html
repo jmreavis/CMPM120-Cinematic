@@ -116,16 +116,11 @@
 
         this.input.on('pointerdown', () => {
           ding.play();
-        });
-
-        this.time.delayedCall(3000, () => {
-          this.cameras.main.fadeOut(3000, 0, 0, 0);
-        });
-
-        this.time.delayedCall(6000, () => {
+          this.cameras.main.fadeOut(2000, 0, 0, 0);
+          this.time.delayedCall(2000, () => {
           this.scene.start('menu');
         });
-
+        });
       }
     }
 
@@ -139,8 +134,21 @@
       }
 
       create() {
-        let message = this.add.text(10, 10, "In the menu class");
-        message.setDepth(1);
+        let play = this.add.text(10, 350, "New Game");
+        play.setDepth(1);
+
+        let load = this.add.text(10, 375, "Load");
+        load.setDepth(1);
+
+        let settings = this.add.text(10, 400, "Settings");
+        settings.setDepth(1);
+
+        let credits = this.add.text(10, 425, "Credits");
+        credits.setDepth(1);
+
+        let quit = this.add.text(10, 450, "Quit Game");
+        quit.setDepth(1);
+
         let background = this.add.sprite(50, 50, "background");
 
         this.add.tween({
